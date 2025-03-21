@@ -9,7 +9,46 @@
 </head>
 <body>
     <canvas style="display: block; inline-size: 100%; max-inline-size: 700px" width="700" height="550"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://unpkg.com/zdog@1.1.3/dist/zdog.dist.min.js"></script>
     <script src="index.js"></script>
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const phrases = [
+            `A proposito, ¿Como andan tus fantasmas?
+            Dales proteína, no sea que se debiliten. No es buena
+            una vida sin fantasmas, una vida cuyas presencias sean
+            todas de carnet
+            `,
+            `Después de todo, más vale ser borracho conocido que alcohólico anónimo
+            ¿Quien habrá parido esa sapiencia?`,
+            `¡¡Puta que ojeras!!`,
+            `EStamos perdiendo la saludable costumbre de la esperanza`,
+            `Estar feliz y sin embargo no ser feliz.
+            Ah, pero nunca imaginé que el estar feliz incluyera ¿sabes?
+            tanta felicidad
+            `,
+            `No importa en que estado calamitoso esté, pero yo quiero recuperar mi primaevera`,
+            `La primavera es como un espejo, pero el mío tiene una esquina rota`,
+            `Creo que a partir de esta noche, murmuró, nos hemos acercado más, creo que ya somos pareja.`
+        ]
+  Swal.fire({
+    title: "Happy Yellow Flowers Day!",
+    html: `<p>${phrases[Math.floor(Math.random() * phrases.length)]}</p>`,
+    imageUrl: "",
+    imageWidth: 200,
+    imageHeight: 200,
+    background: "#ffe4e1",
+    confirmButtonText: "🥰",
+    customClass: {
+      title: 'swal-title-custom',
+      popup: 'swal-popup-custom'
+    }
+  });
+});
+
+    </script>
 </body>
 </html>

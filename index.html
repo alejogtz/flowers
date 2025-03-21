@@ -8,19 +8,24 @@
     <title>Yellow Flowers / Ashley</title>
 </head>
 <body>
-    <canvas style="display: block; inline-size: 100%; max-inline-size: 700px" width="700" height="550"></canvas>
+    <canvas id="canvas" style="display: block; inline-size: 100%; max-inline-size: 700px" width="700" height="550"></canvas>
+
+    <div class="container" style="text-align: center; margin-top: 20px;">
+        <h3 style="font-family: 'Arial', sans-serif; color: #ffcc00; text-shadow: 2px 2px #ff9900;">
+            🌻 Click en las flores amarillas para ver un mensaje 🌻
+        </h3>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://unpkg.com/zdog@1.1.3/dist/zdog.dist.min.js"></script>
     <script src="index.js"></script>
 
     <script>
-
-        document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById('canvas').addEventListener("click", () => {
             const phrases = [
             `A proposito, ¿Como andan tus fantasmas?
             Dales proteína, no sea que se debiliten. No es buena
             una vida sin fantasmas, una vida cuyas presencias sean
-            todas de carnet
+            todas de carne
             `,
             `Después de todo, más vale ser borracho conocido que alcohólico anónimo
             ¿Quien habrá parido esa sapiencia?`,
@@ -28,8 +33,7 @@
             `EStamos perdiendo la saludable costumbre de la esperanza`,
             `Estar feliz y sin embargo no ser feliz.
             Ah, pero nunca imaginé que el estar feliz incluyera ¿sabes?
-            tanta felicidad
-            `,
+            tanta tristeza`,
             `No importa en que estado calamitoso esté, pero yo quiero recuperar mi primaevera`,
             `La primavera es como un espejo, pero el mío tiene una esquina rota`,
             `Creo que a partir de esta noche, murmuró, nos hemos acercado más, creo que ya somos pareja.`

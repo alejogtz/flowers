@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,8 +8,10 @@
     <link rel="stylesheet" href="index.css">
     <title>Yellow Flowers / Ashley</title>
 </head>
+
 <body>
-    <canvas id="canvas" style="display: block; inline-size: 100%; max-inline-size: 700px" width="700" height="550"></canvas>
+    <canvas id="canvas" style="display: block; inline-size: 100%; max-inline-size: 700px" width="700"
+        height="550"></canvas>
 
     <div class="container" style="text-align: center; margin-top: 20px;">
         <h3 style="font-family: 'Arial', sans-serif; color: #ffcc00; text-shadow: 2px 2px #ff9900;">
@@ -20,39 +23,99 @@
     <script src="index.js"></script>
 
     <script>
-        document.getElementById('canvas').addEventListener("click", () => {
-            const phrases = [
+        const phrases = [
+            `Los motivos adultos, o quizá las
+            excusas adultas de los miedos que vienen después, no son fantasmales, sino insoportablemente reales.
+            Sin embargo, a veces les agregamos fantasmas de nuestra cosecha, ¿no te parece?`,
             `A proposito, ¿Como andan tus fantasmas?
             Dales proteína, no sea que se debiliten. No es buena
             una vida sin fantasmas, una vida cuyas presencias sean
-            todas de carne
-            `,
+            todas de carne`,
+            `Si la frase sobrevivió, te habrás dado cuenta de cuán comprensivo estoy. Yo mismo me asombro.
+            Es la vida, muchacha, es la vida. Si no sobrevivió, no te preocupes. No era importante.
+            Date besos y besos, de mi parte.`,
             `Después de todo, más vale ser borracho conocido que alcohólico anónimo
             ¿Quien habrá parido esa sapiencia?`,
             `¡¡Puta que ojeras!!`,
-            `EStamos perdiendo la saludable costumbre de la esperanza`,
+            `Si viajo en tren, me gusta leer. Me fascina ese paisaje vertiginoso, que corre a mi lado, pero en dirección contraria.
+            Pero cuando voy sentada hacia adelante, me parece que el paisaje viene hacia mí,
+             me siento optimista, qué sé yo.
+                <br><br>
+                —¿Y si vas mirando hacia atrás?
+                        <br><br>
+                —Me parece que el paisaje se va, se diluye, se muere. Francamente, me deprime.`,
+            `Estamos perdiendo la saludable costumbre de la esperanza`,
             `Estar feliz y sin embargo no ser feliz.
             Ah, pero nunca imaginé que el estar feliz incluyera ¿sabes?
             tanta tristeza`,
+            `Los tangos son unas músicas tristes que se bailan cuando uno está alegre y así vuelve a ponerse triste.`,
             `No importa en que estado calamitoso esté, pero yo quiero recuperar mi primaevera`,
             `La primavera es como un espejo, pero el mío tiene una esquina rota`,
+            `cinco años que no beso / sólo eso alcanza para enloquecer a cualquiera cinco años dos meses
+            y cuatro días son probablemente demasiado tiempo como precio de algún error`,
+            `el astutísimo neruda preguntaba en una de sus odas ahora primavera dime para qué sirves
+            y a quién sirves suerte que me acordé / para qué sirves /
+            yo diría que para rescatarlo a uno de cualquier pozo`,
             `Creo que a partir de esta noche, murmuró, nos hemos acercado más, creo que ya somos pareja.`
-        ]
-  Swal.fire({
-    title: "Happy Yellow Flowers Day!",
-    html: `<p>${phrases[Math.floor(Math.random() * phrases.length)]}</p>`,
-    imageUrl: "",
-    imageWidth: 200,
-    imageHeight: 200,
-    background: "#ffe4e1",
-    confirmButtonText: "🥰",
-    customClass: {
-      title: 'swal-title-custom',
-      popup: 'swal-popup-custom'
-    }
-  });
-});
+        ];
+        let currentPhraseIndex = 0;
 
+        document.getElementById('canvas').addEventListener("click", () => {
+            let image = null;
+            if (Math.random() < 0.5) {
+                image = "https://cloudfront-us-east-1.images.arcpublishing.com/metroworldnews/DHP5VQJOSRCWPIE7EGCMTC2M2U.png"
+            } else {
+                image = "https://i.ytimg.com/vi/CHIThgNWg_8/hqdefault.jpg"
+            }
+
+
+            // Cargar o inicializar los conteos
+            let counts = JSON.parse(localStorage.getItem('phraseCounts')) || Array(phrases.length).fill(0);
+
+            // Reset si todas las frases salieron igual cantidad de veces
+            if (counts.every(count => count === counts[0])) {
+                counts = Array(phrases.length).fill(0);
+            }
+
+            // Calcular pesos ajustados (menos repetidas pesan más)
+            const weights = counts.map(count => 1 / Math.sqrt(count + 1)); // Raíz cuadrada para suavizar diferencias
+            const totalWeight = weights.reduce((a, b) => a + b, 0);
+
+            // Selección ponderada
+            const random = Math.random() * totalWeight;
+            let cumulativeWeight = 0;
+            let selectedIndex = 0;
+
+            for (let i = 0; i < weights.length; i++) {
+                cumulativeWeight += weights[i];
+                if (random <= cumulativeWeight) {
+                    selectedIndex = i;
+                    break;
+                }
+            }
+
+            // Actualiza el conteo y guarda
+            counts[selectedIndex]++;
+            localStorage.setItem('phraseCounts', JSON.stringify(counts));
+
+            const selectedPhrase = phrases[selectedIndex];
+
+            Swal.fire({
+                title: "Happy Yellow Flowers Day!",
+                // html: `<p>${phrases[Math.floor(Math.random() * phrases.length)]}</p>`,
+                html: `<p>${selectedPhrase}</p>`,
+                imageUrl: image,
+                imageWidth: 200,
+                imageHeight: 200,
+                background: "#ffe4e1",
+                confirmButtonText: "🥰",
+                customClass: {
+                    title: 'swal-title-custom',
+                    popup: 'swal-popup-custom'
+                }
+            });
+        });
     </script>
 </body>
+
 </html>
